@@ -33,6 +33,7 @@ module.exports.addMovie = (req, res, next) => {
   })
     .then((movie) => res.status(201).send(movie))
     .catch((err) => {
+      console.error(err);
       if (err instanceof mongoose.Error.ValidationError) {
         next(new BadRequestError());
       } else {
