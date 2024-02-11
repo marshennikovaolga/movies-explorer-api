@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
-const { emailRegex } = require('../utils/constants');
+const { emailRegex, passwordRegex } = require('../utils/constants');
 const InvalidCredentialsError = require('../errors/invalidCredentialsError');
 
 const userSchema = new mongoose.Schema({
@@ -25,6 +25,12 @@ const userSchema = new mongoose.Schema({
     type: String,
     select: false,
     required: [true, 'Заполните поле'],
+    validate: {
+      validator(password) {
+        return passwordRegex.test(password);
+      },
+      message: 'Введите корректный пароль',
+    },
   },
 }, { versionKey: false });
 
